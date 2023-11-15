@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import React from "react";
+import LoginModal from "../login/login";
 
 const StyledNavBarContainer = styled.nav`
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #007bff;
   color: white;
   padding: 10px;
@@ -23,6 +26,7 @@ const StyledNavList = styled.ul`
   justify-content: flex-end;
   align-items: center;
   padding: 0;
+  margin: 0;
 `;
 
 const StyledNavItem = styled.li`
@@ -44,24 +48,37 @@ const StyledLoginLogout = styled.li`
 `;
 
 const NavBar = () => {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <StyledNavBar>
       <StyledNavBarContainer>
-        <h2>
-          <StyledNavLink to='/'>Rentals</StyledNavLink>
-        </h2>
+        <StyledNavLink to="/">
+          <h2>RentEase</h2>
+        </StyledNavLink>
         <StyledNavList>
           <StyledNavItem>
-            <StyledNavLink to='/rental-list'>Rental List</StyledNavLink>
+            <StyledNavLink to="/rental-list">Rental List</StyledNavLink>
           </StyledNavItem>
           <StyledNavItem>
-            <StyledNavLink to='/add-property'>Add Property</StyledNavLink>
+            <StyledNavLink to="/add-property">Add Property</StyledNavLink>
           </StyledNavItem>
           <StyledLoginLogout>
-            <StyledNavLink to='/'>Log out</StyledNavLink>
+            <p style={{ cursor: "pointer" }} onClick={handleOpenModal}>
+              Login
+            </p>
           </StyledLoginLogout>
         </StyledNavList>
       </StyledNavBarContainer>
+      <LoginModal show={isModalOpen} onClose={handleCloseModal} />
     </StyledNavBar>
   );
 };

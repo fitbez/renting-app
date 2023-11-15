@@ -4,7 +4,7 @@ import { StyledContainer } from "./StyledComponent";
 const HomePage = () => {
   return (
     <StyledContainer>
-      <Home />;
+      <Home />
     </StyledContainer>
   );
 };

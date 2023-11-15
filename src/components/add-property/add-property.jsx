@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import rentalData from "../../rentalData";
+import { useNavigate } from "react-router-dom";
 import {
   StyledLabel,
   StyledButton,
@@ -11,6 +13,7 @@ import {
 } from "./StyledComponents";
 
 const AddProperty = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     property_name: "",
     description: "",
@@ -28,7 +31,10 @@ const AddProperty = () => {
     const { name, value, type } = event.target;
     if (type === "file") {
       const image = event.target.files[0];
-      setFormData({ ...formData, image });
+      const imageUrl = URL.createObjectURL(image);
+
+      setFormData({ ...formData, image: image, imageUrl });
+      // setFormData({ ...formData, image });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -37,6 +43,13 @@ const AddProperty = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Send the property data to your server or perform any other necessary actions here
+    const newProperty = {
+      id: rentalData.length + 1, // Ensure the ID is unique
+      ...formData,
+    };
+    rentalData.push(newProperty)
+    navigate('/rental-list')
+    console.log('rental data', rentalData)
   };
 
   return (
